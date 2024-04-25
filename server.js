@@ -23,7 +23,7 @@ const requestListener = async (req, res) => {
         'Access-Control-Allow-Methods': 'PATCH, POST, GET,OPTIONS,DELETE',
        'Content-Type': 'application/json'
     }
-    
+
     if(req.url=="/rooms" && req.method=="GET"){
         const rooms = await Room.find();
         res.writeHead(200, headers);
@@ -59,6 +59,16 @@ const requestListener = async (req, res) => {
                 res.end();
             }
         })
+    } else if (req.method == "OPTIONS"){
+        res.writeHead(200, headers);
+        res.end();
+    } else {
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({
+            "status": "false",
+            "message": "無此網站路由"
+        }));
+        res.end();
     }
 }
 
