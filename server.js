@@ -60,11 +60,11 @@ const requestListener = async (req, res) => {
             }
         })
     } else if (req.url=="/rooms" && req.method=="DELETE"){
-        const rooms = await Room.deleteMany({});
+        await Room.deleteMany({});
         res.writeHead(200, headers);
         res.write(JSON.stringify({
             "status": "success",
-            rooms
+            rooms: []
         }))
         res.end();
     } else if (req.method == "OPTIONS"){
