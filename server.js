@@ -1,9 +1,18 @@
 const http = require("http");
 const Room = require("./models/room");
+const dotenv = require("dotenv")
 const mongoose = require('mongoose');
 
+dotenv.config({path: "./config.env"});
+
+// console.log(process.env);
+
+const DB = process.env.DATABASE.replace(
+    '<password>',
+    process.env.DATABASE_PASSWORD
+)
 // 連接資料庫
-mongoose.connect('mongodb://127.0.0.1:27017/hotel')
+mongoose.connect(DB)
     .then(()=>{
         console.log('資料庫連線成功')
     })
@@ -81,4 +90,4 @@ const requestListener = async (req, res) => {
 }
 
 const server = http.createServer(requestListener);
-server.listen(3005);
+server.listen(process.env.PORT);
